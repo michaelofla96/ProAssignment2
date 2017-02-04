@@ -41,21 +41,10 @@ void draw()
     {
       ySpeed = - ySpeed;
     }
-    PaddleMovement();
+    keyPressed();
     
 }
    
-    void PaddleMovement()
-    {
-      if(up == true)
-        {
-          luserk = luserk + paddleSpeed;
-        }
-       if(down == true)
-        {
-          luserk = luserk - paddleSpeed;
-        }
-    }
 
 void keyPressed()
 {
@@ -64,7 +53,7 @@ void keyPressed()
     {
       if(keyCode == 'q' || key == 'Q')
         {
-          up = true;
+          luserk = luserk + paddleSpeed;
         }
      }
   //goingdown
@@ -72,22 +61,9 @@ void keyPressed()
     {
       if(keyCode == 'a' || key == 'A')
         {
-          down = true; 
+          luserk = luserk - paddleSpeed; 
         }
     }
 }
-
-void keyReleased()
-  {
-      if(keyCode == 'q' || key == 'Q')
-        {
-          up = false;
-        }
-   
-      if(keyCode == 'a' || key == 'A')
-        {
-          down = false; 
-        }
-  }
    
     
