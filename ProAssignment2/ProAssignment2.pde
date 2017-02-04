@@ -57,6 +57,37 @@ void draw()
         }
     }
 
+void keyPressed()
+{
+   //going up
+  if(keyPressed)
+    {
+      if(keyCode == 'q' || key == 'Q')
+        {
+          up = true;
+        }
+     }
+  //goingdown
+  if(keyPressed)
+    {
+      if(keyCode == 'a' || key == 'A')
+        {
+          down = true; 
+        }
+    }
+}
 
+void keyReleased()
+  {
+      if(keyCode == 'q' || key == 'Q')
+        {
+          up = false;
+        }
+   
+      if(keyCode == 'a' || key == 'A')
+        {
+          down = false; 
+        }
+  }
    
     
