@@ -9,21 +9,22 @@ float x = 0;
 float y = 0;
 float xSpeed = 10;
 float ySpeed = 5;
+float paddleSpeed = 5;
 //ball
 float w = 20;
 float z = 40;
 //paddle
-float ruserh = 750;
-float luserh = 100;
+float luserj = 100;
+float luserk = 250;
+float luserw = 20;
+float luserh = 70;
+boolean up;
+boolean down ;
 void draw()
 {
   background(235, 247, 255);
- 
-  //rightuser
-   rect(ruserh,250,20,70);
-   fill(0,99,99);
-  //leftuser
-   rect(luserh,250,20,70);
+   //paddle
+   rect(luserj,luserk,luserw,luserh);
    fill(250,99,99);
    //ball
     fill(66, 66, 66);
@@ -40,45 +41,22 @@ void draw()
     {
       ySpeed = - ySpeed;
     }
-    //leftuser
-    //going up
-    if(keyPressed)
-  {
-    if(keyCode == 'a')
-    {
-       ruserh = ruserh+20;
-       
-    }
-  }
-    //leftuser
-    //going down
-     if(keyPressed)
-  {
-    if(keyCode == 's')
-    {
-       
-       ruserh = ruserh -20;
-    }
-  }
-  //rightuser
-  //goingup
-    if(keyPressed)
-  {
-    if(keyCode == 'k')
-    {
-       ruserh = ruserh+20;
-       
-    }
-  }
-    //rightuser
-    //going down
-     if(keyPressed)
-  {
-    if(keyCode == 'l')
-    {
-       
-       ruserh = ruserh -20;
-    }
-  }
+    PaddleMovement();
     
 }
+   
+    void PaddleMovement()
+    {
+      if(up == true)
+        {
+          luserk = luserk + paddleSpeed;
+        }
+       if(down == true)
+        {
+          luserk = luserk - paddleSpeed;
+        }
+    }
+
+
+   
+    
