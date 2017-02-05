@@ -46,7 +46,7 @@ void bouncingball()
     bally += ySpeed;
     //bouncing ball
     //bounce off the side walls 
-    if (ballx + ballw > width )//|| ballx < 0)
+    if (ballx + ballw > width ) //|| ballx < 0)
     {
       //change direction
       xSpeed = - xSpeed;
@@ -60,7 +60,7 @@ void bouncingball()
     //if ball goes past paddle
     if(ballx < 0)
     {
-      setup();
+      endgame();
     }
     
 }
@@ -105,7 +105,7 @@ void keyPressed()
 void hitpaddle()
 {
   //if ball hit points of the paddle
-  if(ballx - ballw/2 < luserj + luserw/2 && bally - ballh/2 < + luserk + luserh/2 && bally + ballh/2 > + luserk - luserh/2 )
+  if(ballx - ballw/2 < luserj + luserw/2 && bally - ballh/2 < + luserk + luserh && bally + ballh/2 > + luserk - luserh )
   {
     //if ball hits paddle from the right side 
     if(xSpeed <0)
@@ -118,6 +118,22 @@ void hitpaddle()
     //ySpeed = - ySpeed;
     //&& bally - ballh < luserk + luserh
   }
+}
+void endgame()
+{
+  xSpeed = 0;
+  ySpeed = 0;
+  background(0,0,0);
+  fill(255,0,0);
+  textSize(40);
+  text("Game",350,250);
+  text("Over",350,300);
+  text("Score:", 350,400);
+  //play again box
+  rect(310,450,275,80);
+  fill(0,0,0);
+  text("Play again", 350, 500);
+  
 }
 
 //bounce off all walls but the one you are beside.
