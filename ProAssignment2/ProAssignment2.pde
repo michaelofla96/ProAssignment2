@@ -39,12 +39,16 @@ void bouncingball()
     ballx += xSpeed;
     bally += ySpeed;
     //bouncing ball
+    //bounce off the side walls
     if (ballx + ballw > width || ballx < 0)
     {
+      //change direction
       xSpeed = - xSpeed;
     }
+    //bounce off the top and bottom walls
     if(bally + ballh > height || bally < 0)
     {
+      //change direction
       ySpeed = - ySpeed;
     }
     
@@ -52,11 +56,12 @@ void bouncingball()
 //TO stop paddle from going off screen
 void paddlemovement()
 {
+  //if paddle is going off the top of the screen
    if(luserk < 0)
      {
       luserk = luserk + paddleSpeed;
      }
-     
+     //if paddle is going off greater than the height you allocated.
     if(luserk + luserh > height)
     {
       luserk = luserk - paddleSpeed;
@@ -88,9 +93,15 @@ void keyPressed()
 //ball to hit off paddle
 void hitpaddle()
 {
+  //if ball hit points of the paddle
   if(ballx - ballw/2 < luserj + luserw/2 && bally - ballh/2 < + luserk + luserh/2 && bally + ballh/2 > + luserk - luserh/2 )
   {
-    xSpeed = - xSpeed;
+    //if ball hits paddle from the right side 
+    if(xSpeed <0)
+     {
+      //change direction
+      xSpeed = - xSpeed;
+     }
     //ySpeed = - ySpeed;
     //&& bally - ballh < luserk + luserh
   }
