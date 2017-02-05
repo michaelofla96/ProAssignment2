@@ -1,25 +1,24 @@
 void setup ()
 {
-  size(850,850);
+  size(900,700);
   
 
 }
 //speeds
-float x = 0;
-float y = 0;
-float xSpeed = 10;
-float ySpeed = 5;
-float paddleSpeed = 5;
+float ballx = 0;
+float bally = 0;
+float xSpeed = 1;
+float ySpeed = 1;
+float paddleSpeed = 10;
 //ball
-float w = 20;
-float z = 40;
+float ballw = 50;
+float ballh = 50;
 //paddle
-float luserj = 100;
+float luserj = 70;
 float luserk = 250;
 float luserw = 20;
-float luserh = 70;
-boolean up;
-boolean down ;
+float luserh = 90;
+
 void draw()
 {
   background(235, 247, 255);
@@ -28,42 +27,79 @@ void draw()
    fill(250,99,99);
    //ball
     fill(66, 66, 66);
-    ellipse(x, y, z, w);
+    ellipse(ballx, bally, ballw, ballh);
+    keyPressed();
+    bouncingball();
+    paddlemovement();
+    //hitpaddle();
+}
+void bouncingball()
+{
     //Speed of ball
-    x += xSpeed;
-    y += ySpeed;
+    ballx += xSpeed;
+    bally += ySpeed;
     //bouncing ball
-    if (x + w > width || x < 0)
+    if (ballx + ballw > width || ballx < 0)
     {
       xSpeed = - xSpeed;
     }
-    if(y + z > height || y < 0)
+    if(bally + ballh > height || bally < 0)
     {
       ySpeed = - ySpeed;
     }
-    keyPressed();
     
 }
-   
+//TO stop paddle from going off screen
+void paddlemovement()
+{
+   if(luserk < 0)
+     {
+      luserk = luserk + paddleSpeed;
+     }
+     
+    if(luserk + luserh > height)
+    {
+      luserk = luserk - paddleSpeed;
+    }
+}
 
 void keyPressed()
 {
    //going up
   if(keyPressed)
     {
-      if(keyCode == 'q' || key == 'Q')
+      // if Q is pressed paddle moves up
+      if(keyCode == 'q' || keyCode == 'Q')
         {
-          luserk = luserk + paddleSpeed;
+          luserk = luserk - paddleSpeed;
         }
      }
   //goingdown
   if(keyPressed)
     {
-      if(keyCode == 'a' || key == 'A')
+      //if A is pressed paddle moves up
+      if(keyCode == 'a' || keyCode == 'A')
         {
-          luserk = luserk - paddleSpeed; 
+          luserk = luserk + paddleSpeed; 
         }
     }
+    
 }
+//ball to hit off paddle
+void hitpaddle()
+{
+  if(ballx - ballw/2 < luserj + luserw/2 && bally - ballh/2 < luserk + luserh/2)
+  {
+    xSpeed = - xSpeed;
+    ySpeed = - ySpeed;
+  }
+}
+
+//bounce off all walls but the one you are beside.
+//paddlespeed to change
+//size of paddle
+//two balls
+
+
    
     
