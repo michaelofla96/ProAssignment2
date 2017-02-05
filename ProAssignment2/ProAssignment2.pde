@@ -5,12 +5,12 @@ void setup ()
 
 }
 //speeds
-float ballx = 460;
-float bally = 150;
-float xSpeed = 3;
-float ySpeed = 3;
+float xSpeed = 5;
+float ySpeed = 5;
 float paddleSpeed = 10;
 //ball
+float ballx = 460;
+float bally = 150;
 float ballw = 50;
 float ballh = 50;
 //paddle
@@ -18,6 +18,9 @@ float luserj = 70;
 float luserk = 250;
 float luserw = 20;
 float luserh = 90;
+//scoreboard
+int score = 0;
+
 
 void draw()
 {
@@ -28,6 +31,9 @@ void draw()
    //ball
     fill(66, 66, 66);
     ellipse(ballx, bally, ballw, ballh);
+    //scoreboard
+    textSize(30);
+    text(score,100,50);
     keyPressed();
     bouncingball();
     paddlemovement();
@@ -39,8 +45,8 @@ void bouncingball()
     ballx += xSpeed;
     bally += ySpeed;
     //bouncing ball
-    //bounce off the side walls
-    if (ballx + ballw > width || ballx < 0)
+    //bounce off the side walls 
+    if (ballx + ballw > width )//|| ballx < 0)
     {
       //change direction
       xSpeed = - xSpeed;
@@ -50,6 +56,11 @@ void bouncingball()
     {
       //change direction
       ySpeed = - ySpeed;
+    }
+    //if ball goes past paddle
+    if(ballx < 0)
+    {
+      setup();
     }
     
 }
@@ -101,6 +112,8 @@ void hitpaddle()
      {
       //change direction
       xSpeed = - xSpeed;
+      //everytime it hits off the paddle the score goes up
+      score++;
      }
     //ySpeed = - ySpeed;
     //&& bally - ballh < luserk + luserh
