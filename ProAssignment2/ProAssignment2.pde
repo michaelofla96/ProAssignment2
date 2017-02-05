@@ -166,7 +166,7 @@ void endgame()
 
 void paddlesize()
 {
-  if(score % 3 == 0)
+  if(frameCount < 600 && frameCount > 800 )
   {
     fill(68,255,18);
     rect(psizex,psizey,psizew,psizeh);
@@ -179,7 +179,21 @@ void paddlesize()
   }
 }
   
-
+void speedup()
+{
+  if (frameCount < 600 && frameCount > 800)
+  {
+    fill(242,18,255);
+    rect(supx,supy,supw,suph);
+  
+  //if ball hit rect
+    if(ballx - ballw/2 < supx + supw/2 && bally - ballh/2 < + supy + suph && bally + ballh/2 > + supy - suph )
+    {
+      //increase speed
+      xSpeed = xSpeed + 1;
+    }
+  }
+}
 
 /*
 void smallpaddle
