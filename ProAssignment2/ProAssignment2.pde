@@ -5,10 +5,10 @@ void setup ()
 
 }
 //speeds
-float ballx = 0;
-float bally = 0;
-float xSpeed = 1;
-float ySpeed = 1;
+float ballx = 460;
+float bally = 150;
+float xSpeed = 3;
+float ySpeed = 3;
 float paddleSpeed = 10;
 //ball
 float ballw = 50;
@@ -31,7 +31,7 @@ void draw()
     keyPressed();
     bouncingball();
     paddlemovement();
-    //hitpaddle();
+    hitpaddle();
 }
 void bouncingball()
 {
@@ -88,10 +88,11 @@ void keyPressed()
 //ball to hit off paddle
 void hitpaddle()
 {
-  if(ballx - ballw/2 < luserj + luserw/2 && bally - ballh/2 < luserk + luserh/2)
+  if(ballx - ballw/2 < luserj + luserw/2 && bally - ballh/2 < + luserk + luserh/2 && bally + ballh/2 > + luserk - luserh/2 )
   {
     xSpeed = - xSpeed;
-    ySpeed = - ySpeed;
+    //ySpeed = - ySpeed;
+    //&& bally - ballh < luserk + luserh
   }
 }
 
