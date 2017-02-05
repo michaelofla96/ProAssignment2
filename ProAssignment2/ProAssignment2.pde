@@ -7,37 +7,51 @@ void setup ()
 //speeds
 float xSpeed = 5;
 float ySpeed = 5;
-float paddleSpeed = 10;
+float paddleSpeed = 15;
 //ball
 float ballx = 460;
 float bally = 150;
 float ballw = 50;
 float ballh = 50;
 //paddle
-float luserj = 70;
-float luserk = 250;
+float luserx = 70;
+float lusery = 250;
 float luserw = 20;
 float luserh = 90;
 //scoreboard
 int score = 0;
 
+// change to paddlesize
+float psizex = 600;
+float psizey = 50;
+float psizew = 30;
+float psizeh = 30;
+// change to ball Speed
+float supx = 600;
+float supy = 500;
+float supw = 30;
+float suph = 30;
 
 void draw()
 {
   background(235, 247, 255);
    //paddle
-   rect(luserj,luserk,luserw,luserh);
    fill(250,99,99);
+   rect(luserx,lusery,luserw,luserh);
    //ball
-    fill(66, 66, 66);
+    fill(255, 255, 0);
     ellipse(ballx, bally, ballw, ballh);
     //scoreboard
+    fill(0,0,0);
     textSize(30);
     text(score,100,50);
+    
     keyPressed();
     bouncingball();
     paddlemovement();
     hitpaddle();
+    paddlesize();
+    speedup();
 }
 void bouncingball()
 {
@@ -68,14 +82,14 @@ void bouncingball()
 void paddlemovement()
 {
   //if paddle is going off the top of the screen
-   if(luserk < 0)
+   if(lusery < 0)
      {
-      luserk = luserk + paddleSpeed;
+      lusery = lusery + paddleSpeed;
      }
      //if paddle is going off greater than the height you allocated.
-    if(luserk + luserh > height)
+    if(lusery + luserh > height)
     {
-      luserk = luserk - paddleSpeed;
+      lusery = lusery - paddleSpeed;
     }
 }
 
@@ -87,7 +101,7 @@ void keyPressed()
       // if Q is pressed paddle moves up
       if(keyCode == 'q' || keyCode == 'Q')
         {
-          luserk = luserk - paddleSpeed;
+          lusery = lusery - paddleSpeed;
         }
      }
   //goingdown
@@ -96,7 +110,7 @@ void keyPressed()
       //if A is pressed paddle moves up
       if(keyCode == 'a' || keyCode == 'A')
         {
-          luserk = luserk + paddleSpeed; 
+          lusery = lusery + paddleSpeed; 
         }
     }
     
@@ -105,7 +119,7 @@ void keyPressed()
 void hitpaddle()
 {
   //if ball hit points of the paddle
-  if(ballx - ballw/2 < luserj + luserw/2 && bally - ballh/2 < + luserk + luserh && bally + ballh/2 > + luserk - luserh )
+  if(ballx - ballw/2 < luserx + luserw && bally - ballh/2 < + lusery + luserh && bally + ballh/2 > + lusery - luserh )
   {
     //if ball hits paddle from the right side 
     if(xSpeed <0)
@@ -121,6 +135,7 @@ void hitpaddle()
 }
 void endgame()
 {
+  //freeze ball
   xSpeed = 0;
   ySpeed = 0;
   background(0,0,0);
@@ -128,17 +143,51 @@ void endgame()
   textSize(40);
   text("Game",350,250);
   text("Over",350,300);
+  //show score
   text("Score:", 350,400);
+  text(score,475,400);
   //play again box
   rect(310,450,275,80);
   fill(0,0,0);
   text("Play again", 350, 500);
-  
+  if (mousePressed)
+  {
+    //if mouse is pressed between these coordinates
+    if(mouseX>310 && mouseX<585 && mouseY>450 && mouseY<530);
+    {
+      fill(34,34,34);
+      rect(100,100,100,100);
+      //setup();
+      //draw();
+    }
+  }
 }
 
-//bounce off all walls but the one you are beside.
-//paddlespeed to change
-//size of paddle
+
+void paddlesize()
+{
+  if(score % 3 == 0)
+  {
+    fill(68,255,18);
+    rect(psizex,psizey,psizew,psizeh);
+  
+    if(ballx - ballw/2 < psizex + psizew/2 && bally - ballh/2 < + psizey + psizeh && bally + ballh/2 > + psizey - psizeh )
+    {
+    //increase paddle size
+    luserh++;
+    }
+  }
+}
+  
+
+
+/*
+void smallpaddle
+void slowdown
+
+*/
+
+
 //two balls
 
 
