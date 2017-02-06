@@ -272,7 +272,21 @@ void speedup()
   }
 }
 
-
+void slowdown()
+{
+  if (score % 3 == 0)
+  {
+    fill(242,18,255);
+    rect(downx,downy,downw,downh);
+  
+    //if ball hit rect
+    if(ballx - ballw/2 < downx + downw/2 && bally - ballh/2 < + downy + downh/2 && bally + ballh/2 > + downy - downh/2 )
+    {
+      //increase speed
+      xSpeed = xSpeed + 1;
+    }
+  }
+}
 /*
 void twoballs()
 {
