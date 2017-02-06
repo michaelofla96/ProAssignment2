@@ -240,7 +240,21 @@ void paddlesize()
     }
   }
 }
-
+void smallpaddle()
+{
+  if(score % 5 == 0)
+  {
+    fill(255,0,0);
+    rect(spadx,spady,spadw,spadh);
+  
+    if(ballx - ballw/2 < spadx + spadw/2 && bally - ballh/2 < + spady + spadh/2 && bally + ballh/2 > + spady - spadh/2 )
+    {
+    //increase paddle size
+    luserh--;
+    }
+  }
+  
+}
   
 void speedup()
 {
