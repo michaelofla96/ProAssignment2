@@ -3,7 +3,7 @@ Menu reptar;
 void setup ()
 {
   size(900,700);
-  reptar = new Menu(false);
+  reptar = new Menu(true);
   //font
   //Images
   //Sounds
@@ -230,8 +230,8 @@ void endgame()
   }
 }
 
-
-/*void paddlesize()
+/*
+void paddlesize()
 {
   if(score % 3 == 0)
   {
@@ -239,7 +239,8 @@ void endgame()
     fill(68,255,18);
     rect(psizex,psizey,psizew,psizeh);
   
-    if(ballx - ballw/2 < psizex + psizew/2 && bally - ballh/2 < + psizey + psizeh/2 && bally + ballh/2 > + psizey - psizeh/2 )
+    //if(ballx - ballw/2 < psizex + psizew/2 && bally - ballh/2 < + psizey + psizeh/2 && bally + ballh/2 > + psizey - psizeh/2 )
+     if(((ballx - ballw/2) < (psizex + psizew)) && ((bally - ballh/2) < (psizey + psizeh/2)) && ((bally + ballh/2) > (psizey + psizeh/2)))
     {
     //increase paddle size
     luserh++;
@@ -254,7 +255,8 @@ void smallpaddle()
     fill(255,0,0);
     rect(spadx,spady,spadw,spadh);
   
-    if(ballx - ballw/2 < spadx + spadw/2 && bally - ballh/2 < + spady + spadh/2 && bally + ballh/2 > + spady - spadh/2 )
+    //if(ballx - ballw/2 < spadx + spadw/2 && bally - ballh/2 < + spady + spadh/2 && bally + ballh/2 > + spady - spadh/2 )
+    if(((ballx - ballw/2) < (spadx + spadw)) && ((bally - ballh/2) < (spady + spadh/2)) && ((bally + ballh/2) > (spady + spadh/2)))
     {
     //increase paddle size
     luserh--;
@@ -272,7 +274,8 @@ void speedup()
     rect(supx,supy,supw,suph);
   
     //if ball hit rect
-    if(ballx - ballw/2 < supx + supw/2 && bally - ballh/2 < + supy + suph/2 && bally + ballh/2 > + supy - suph/2 )
+    //if(ballx - ballw/2 < supx + supw/2 && bally - ballh/2 < + supy + suph/2 && bally + ballh/2 > + supy - suph/2 )
+    if(((ballx - ballw/2) < (supx + supw)) && ((bally - ballh/2) < (supy + suph/2)) && ((bally + ballh/2) > (supy + suph/2)))
     {
       //increase speed
       xSpeed = xSpeed + 1;
@@ -290,14 +293,15 @@ void slowdown()
     rect(downx,downy,downw,downh);
   
     //if ball hit rect
-    if(ballx - ballw/2 < downx + downw/2 && bally - ballh/2 < + downy + downh/2 && bally + ballh/2 > + downy - downh/2 )
+    //if(ballx - ballw/2 < downx + downw/2 && bally - ballh/2 < + downy + downh/2 && bally + ballh/2 > + downy - downh/2 )
+    if(((ballx - ballw/2) < (downx + downw)) && ((bally - ballh/2) < (downy + downh/2)) && ((bally + ballh/2) > (downy + downh/2)))
     {
       //increase speed
       xSpeed = xSpeed + 1;
       ySpeed = ySpeed + 1;
     }
   }
-}*/
+}
 /*
 void twoballs()
 {
@@ -307,7 +311,8 @@ void twoballs()
     rect(tbx,tby,tbw,tbh);
   }
 
-    if(ballx - ballw/2 < tbx + tbw/2 && bally - ballh/2 < + tby + tbh/2 && bally + ballh/2 > + tby - tbh/2 )
+    //if(ballx - ballw/2 < tbx + tbw/2 && bally - ballh/2 < + tby + tbh/2 && bally + ballh/2 > + tby - tbh/2 )
+    if(((ballx - ballw/2) < (tbx + tbw)) && ((bally - ballh/2) < (tby + tbh/2)) && ((bally + ballh/2) > (tby + tbh/2)))
     {
        ellipse(tballx,tbally,tballw,tballh);
        
@@ -335,7 +340,8 @@ void twoballs()
          }
     //}
    //if ball hit points of the paddle
-    if(tballx - tballw/2 < luserx + luserw && tbally - tballh/2 < + lusery + luserh/2 && tbally + tballh/2 > + lusery - luserh/2 )
+    //if(tballx - tballw/2 < luserx + luserw && tbally - tballh/2 < + lusery + luserh/2 && tbally + tballh/2 > + lusery - luserh/2 )
+    if(((ballx - ballw/2) < (luserx + luserw)) && ((bally - ballh/2) < (lusery + luserh/2)) && ((bally + ballh/2) > (lusery + luserh/2)))
     {
     //if ball hits paddle from the right side 
       if(xSpeed <0)
