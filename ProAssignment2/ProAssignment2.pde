@@ -1,8 +1,9 @@
 import processing.sound.*;
-
+Menu reptar;
 void setup ()
 {
   size(900,700);
+  reptar = new Menu(false);
   //font
   //Images
   //Sounds
@@ -19,6 +20,7 @@ float bally = 100;
 float ballw = 50;
 float ballh = 50;
 //paddle
+PShape paddle;
 float luserx = 70;
 float lusery = 250;
 float luserw = 20;
@@ -33,7 +35,7 @@ float psizew = 30;
 float psizeh = 30;
 //small paddle
 float spadx = 600;
-float spady = 500;
+float spady = 50;
 float spadw = 30;
 float spadh = 30;
 // speed up
@@ -43,7 +45,7 @@ float supw = 30;
 float suph = 30;
 //slow down
 float downx = 600;
-float downy = 50;
+float downy = 500;
 float downw = 30;
 float downh = 30;
 //twoball powerup
@@ -59,12 +61,19 @@ float tballh = 30;
 
 void draw()
 {
-  //homescreen();
+  if(reptar.menu == true)
+  {
+    reptar.homescreen();
+  }
+  else
+  {
   background(235, 247, 255);
    //paddle
+   stroke(0,0,0);
    fill(250,99,99);
    rect(luserx,lusery,luserw,luserh);
    //ball
+    stroke(255,0,0);
     fill(255, 255, 0);
     ellipse(ballx, bally, ballw, ballh);
     //scoreboard
@@ -76,12 +85,16 @@ void draw()
     bouncingball();
     paddlemovement();
     hitpaddle();
-    paddlesize();
-    speedup();
-    smallpaddle();
-    //slowdown();
+    //paddlesize();
+    //speedup();
+    //smallpaddle();
+    //aslowdown();
     //twoballs();
+  }
 }
+
+
+
 void bouncingball()
 {
     //Speed of ball
@@ -101,7 +114,7 @@ void bouncingball()
       ySpeed = - ySpeed;
     }
     //if ball goes past paddle
-    if(ballx <= 0)
+    if(ballx +ballw/2 <= 0)
     {
       endgame();
     }
@@ -148,8 +161,9 @@ void keyPressed()
 void hitpaddle()
 {
   //if ball hit points of the paddle
-    //if(ballx - ballw/2 < luserx + luserw && bally - ballh/2 > + lusery + luserh/2 && bally + ballh/2 < + lusery - luserh/2 )
-  if(ballx - ballw/2 < luserx + luserw && bally - ballh/2 < + lusery + luserh/2 && bally + ballh/2 > + lusery - luserh/2 )
+  //if(ballx - ballw/2 < luserx + luserw && bally - ballh/2 < + lusery + luserh/2 && bally + ballh/2 > + lusery - luserh/2 )
+  //if( dist(ballx, bally, luserx-luserh/2, lusery+luserh/2) < 110  )
+
   {
     //if ball hits paddle from the right side 
     if(xSpeed <0)
@@ -178,6 +192,7 @@ void endgame()
   text("Score:", 350,250);
   text(score,475,250);
   //play again box
+  stroke(0,0,0);
   fill(255,0,0);
   rect(310,300,275,80);
   fill(0,0,0);
@@ -192,7 +207,7 @@ void endgame()
     //if mouse is pressed between these coordinates
     if(mouseX>310 && mouseX<585 && mouseY>275 && mouseY<355)
     {
-      homescreen();
+      reptar.menu = false;
     }
   }
   if(mousePressed)
@@ -204,32 +219,13 @@ void endgame()
       }
   }
 }
-//starting screen
-void homescreen()
-{
-  background(177,206,202);
-  fill(255,255,0);
-  textSize(60);
-  text("Off the wall", 300,100);
-  
-  textSize(40);
-  fill(255,0,0);
-  rect(310,300,275,80);
-  fill(0,0,0);
-  text("Play Game", 350, 350);
-  fill(255,0,0);
-  rect(310,400,275,80);
-  fill(0,0,0);
-  text("Quit Game", 350, 450);
-  
-  
-}
 
 
-void paddlesize()
+/*void paddlesize()
 {
   if(score % 3 == 0)
   {
+    stroke(255,205,0);
     fill(68,255,18);
     rect(psizex,psizey,psizew,psizeh);
   
@@ -244,6 +240,7 @@ void smallpaddle()
 {
   if(score % 5 == 0)
   {
+    stroke(255,205,0);
     fill(255,0,0);
     rect(spadx,spady,spadw,spadh);
   
@@ -260,6 +257,7 @@ void speedup()
 {
   if (score % 5 == 0)
   {
+    stroke(255,205,0);
     fill(242,18,255);
     rect(supx,supy,supw,suph);
   
@@ -268,6 +266,7 @@ void speedup()
     {
       //increase speed
       xSpeed = xSpeed + 1;
+      ySpeed = ySpeed + 1;
     }
   }
 }
@@ -276,6 +275,7 @@ void slowdown()
 {
   if (score % 3 == 0)
   {
+    stroke(255,205,0);
     fill(242,18,255);
     rect(downx,downy,downw,downh);
   
@@ -284,9 +284,10 @@ void slowdown()
     {
       //increase speed
       xSpeed = xSpeed + 1;
+      ySpeed = ySpeed + 1;
     }
   }
-}
+}*/
 /*
 void twoballs()
 {
