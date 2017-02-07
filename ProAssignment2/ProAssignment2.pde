@@ -3,7 +3,7 @@ Menu reptar;
 void setup ()
 {
   size(900,700);
-  reptar = new Menu(true);
+  reptar = new Menu(false);
   //font
   //Images
   //Sounds
@@ -21,31 +21,31 @@ float ballw = 50;
 float ballh = 50;
 //paddle
 PShape paddle;
-float luserx = 70;
+float luserx = 3;
 float lusery = 250;
 float luserw = 20;
 float luserh = 90;
 //scoreboard
-int score = 1;
+int score = 2;
 
 // change to paddlesize
-float psizex = 600;
+float psizex = 775;
 float psizey = 50;
 float psizew = 30;
 float psizeh = 30;
 //small paddle
-float spadx = 600;
+float spadx = 775;
 float spady = 50;
 float spadw = 30;
 float spadh = 30;
 // speed up
-float supx = 600;
-float supy = 500;
+float supx = 775;
+float supy = 650;
 float supw = 30;
 float suph = 30;
 //slow down
-float downx = 600;
-float downy = 500;
+float downx = 775;
+float downy = 650;
 float downw = 30;
 float downh = 30;
 //twoball powerup
@@ -85,10 +85,10 @@ void draw()
     bouncingball();
     paddlemovement();
     hitpaddle();
-    //paddlesize();
-    //speedup();
-    //smallpaddle();
-    //aslowdown();
+    paddlesize();
+    speedup();
+    smallpaddle();
+    slowdown();
     //twoballs();
   }
 }
@@ -151,7 +151,7 @@ void keyPressed()
   if(keyPressed)
     {
       // if Q is pressed paddle moves up
-      if(keyCode == 'q' || keyCode == 'Q')
+      if(keyCode == 'w' || keyCode == 'W')
         {
           lusery = lusery - paddleSpeed;
         }
@@ -160,7 +160,7 @@ void keyPressed()
   if(keyPressed)
     {
       //if A is pressed paddle moves up
-      if(keyCode == 'a' || keyCode == 'A')
+      if(keyCode == 's' || keyCode == 'S')
         {
           lusery = lusery + paddleSpeed; 
         }
@@ -171,9 +171,9 @@ void keyPressed()
 void hitpaddle()
 {
   //if ball hit points of the paddle
-  //if(ballx - ballw/2 < luserx + luserw && bally - ballh/2 < + lusery + luserh/2 && bally + ballh/2 > + lusery - luserh/2 )
   //if( dist(ballx, bally, luserx-luserh/2, lusery+luserh/2) < 110  )
-  if(((ballx - ballw/2) < (luserx + luserw)) && ((bally - ballh/2) < (lusery + luserh/2)) && ((bally + ballh/2) > (lusery + luserh/2)))
+  //if(((ballx - ballw/2) < (luserx + luserw)) && ((bally - ballh/2) < (lusery + luserh/2)) && ((bally + ballh/2) > (lusery + luserh/2)))
+  if(((ballx - ballw/2) < (luserx + luserw)) && ((bally - ballh/2) < (lusery + luserh/2)) && ((bally + ballw/2) > (lusery + luserh/2)))
   {
     //if ball hits paddle from the right side 
     if(xSpeed <0)
@@ -230,7 +230,7 @@ void endgame()
   }
 }
 
-/*
+
 void paddlesize()
 {
   if(score % 3 == 0)
@@ -240,30 +240,16 @@ void paddlesize()
     rect(psizex,psizey,psizew,psizeh);
   
     //if(ballx - ballw/2 < psizex + psizew/2 && bally - ballh/2 < + psizey + psizeh/2 && bally + ballh/2 > + psizey - psizeh/2 )
-     if(((ballx - ballw/2) < (psizex + psizew)) && ((bally - ballh/2) < (psizey + psizeh/2)) && ((bally + ballh/2) > (psizey + psizeh/2)))
+     if(((ballx - ballw/2) > (psizex + psizew)) && ((bally - ballh/2) < (psizey + psizeh/2)) && ((bally + ballh/2) > (psizey + psizeh/2)))
     {
     //increase paddle size
     luserh++;
     }
   }
 }
-void smallpaddle()
-{
-  if(score % 5 == 0)
-  {
-    stroke(255,205,0);
-    fill(255,0,0);
-    rect(spadx,spady,spadw,spadh);
+
   
-    //if(ballx - ballw/2 < spadx + spadw/2 && bally - ballh/2 < + spady + spadh/2 && bally + ballh/2 > + spady - spadh/2 )
-    if(((ballx - ballw/2) < (spadx + spadw)) && ((bally - ballh/2) < (spady + spadh/2)) && ((bally + ballh/2) > (spady + spadh/2)))
-    {
-    //increase paddle size
-    luserh--;
-    }
-  }
-  
-}
+
   
 void speedup()
 {
@@ -275,7 +261,7 @@ void speedup()
   
     //if ball hit rect
     //if(ballx - ballw/2 < supx + supw/2 && bally - ballh/2 < + supy + suph/2 && bally + ballh/2 > + supy - suph/2 )
-    if(((ballx - ballw/2) < (supx + supw)) && ((bally - ballh/2) < (supy + suph/2)) && ((bally + ballh/2) > (supy + suph/2)))
+    if(((ballx - ballw/2) > (supx + supw)) && ((bally - ballh/2) < (supy + suph/2)) && ((bally + ballh/2) > (supy + suph/2)))
     {
       //increase speed
       xSpeed = xSpeed + 1;
@@ -294,7 +280,7 @@ void slowdown()
   
     //if ball hit rect
     //if(ballx - ballw/2 < downx + downw/2 && bally - ballh/2 < + downy + downh/2 && bally + ballh/2 > + downy - downh/2 )
-    if(((ballx - ballw/2) < (downx + downw)) && ((bally - ballh/2) < (downy + downh/2)) && ((bally + ballh/2) > (downy + downh/2)))
+    if(((ballx - ballw/2) > (downx + downw)) && ((bally - ballh/2) < (downy + downh/2)) && ((bally + ballh/2) > (downy + downh/2)))
     {
       //increase speed
       xSpeed = xSpeed + 1;
