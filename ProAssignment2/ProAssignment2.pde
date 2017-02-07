@@ -93,7 +93,17 @@ void draw()
   }
 }
 
-
+void Paddle()
+{
+  paddle = createShape();
+  paddle.beginShape();
+  paddle.vertex(0, 0);
+  paddle.vertex(0, -luserh/2);
+  paddle.vertex(20, -luserh/2);
+  paddle.vertex(20, luserh);
+  paddle.vertex(0, luserh);
+  paddle.endShape(CLOSE);
+}
 
 void bouncingball()
 {
@@ -163,7 +173,7 @@ void hitpaddle()
   //if ball hit points of the paddle
   //if(ballx - ballw/2 < luserx + luserw && bally - ballh/2 < + lusery + luserh/2 && bally + ballh/2 > + lusery - luserh/2 )
   //if( dist(ballx, bally, luserx-luserh/2, lusery+luserh/2) < 110  )
-
+  if(((ballx - ballw/2) < (luserx + luserw)) && ((bally - ballh/2) < (lusery + luserh/2)) && ((bally + ballh/2) > (lusery + luserh/2)))
   {
     //if ball hits paddle from the right side 
     if(xSpeed <0)
