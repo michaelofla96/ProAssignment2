@@ -1,15 +1,23 @@
-import processing.sound.*;
-Menu reptar;
+import ddf.minim.*;
+Minim minim;
+AudioPlayer fail;
+AudioPlayer click;
+AudioPlayer boing;
+Menu reptar; 
 void setup ()
 {
   size(900,700);
-  reptar = new Menu(false);
-  //font
-  //Images
-  //Sounds
-  
+  reptar = new Menu();
+  font = loadFont("BerlinSansFB-Bold-48.vlw");
+  textFont(font);
 
+  
+  minim = new Minim(this);
+  fail = minim.loadFile("fail.mp3");
+  click = minim.loadFile("click.mp3");
+  boing = minim.loadFile("boing.mp3");
 }
+PFont font;
 //speeds
 float xSpeed = 5;
 float ySpeed = 5;
@@ -21,66 +29,107 @@ float ballw = 50;
 float ballh = 50;
 //paddle
 PShape paddle;
-float luserx = 3;
-float lusery = 250;
-float luserw = 20;
-float luserh = 90;
+float paddlex = 3;
+float paddley = 250;
+float paddlew = 20;
+float paddleh = 90;
+int game_reset = 0;
 //scoreboard
-int score = 2;
+int score = 1;
 
 // change to paddlesize
-float psizex = 775;
+float psizex = 750;
 float psizey = 50;
 float psizew = 30;
 float psizeh = 30;
 //small paddle
-float spadx = 775;
+float spadx = 750;
 float spady = 50;
 float spadw = 30;
 float spadh = 30;
 // speed up
-float supx = 775;
+float supx = 750;
 float supy = 650;
 float supw = 30;
 float suph = 30;
 //slow down
-float downx = 775;
+float downx = 750;
 float downy = 650;
 float downw = 30;
 float downh = 30;
-//twoball powerup
-float tbx = 350;
-float tby = 300;
-float tbw = 30;
-float tbh = 30;
-//second ball
-float tballx = 100;
-float tbally = 100;
-float tballw = 30;
-float tballh = 30;
+//Game states
+//final int statemenu = 0;
+//final int stateGame = 1;
+//final int stateEndGame = 2;
+int state =0;
+//int state = statemenu;
 
 void draw()
 {
-  if(reptar.menu == true)
-  {
-    reptar.homescreen();
-  }
-  else
-  {
-  background(235, 247, 255);
-   //paddle
-   stroke(0,0,0);
-   fill(250,99,99);
-   rect(luserx,lusery,luserw,luserh);
-   //ball
-    stroke(255,0,0);
-    fill(255, 255, 0);
-    ellipse(ballx, bally, ballw, ballh);
-    //scoreboard
+  
+   // Switch between states
+  //switch(state) {
+    //case 0:
+    //  reptar.homescreen();
+    //  break;
+    //case 1:
+    //   displayGame();     
+    //  break;
+    //case 2:
+    //  endgame();
+    //  break;
+    //}
+    
+    if (state == 0)
+    {
+      reptar.homescreen();
+    }
+    else if (state == 1)
+    {
+      displayGame(); 
+    }
+    else if (state == 2)
+    {
+      endgame(); 
+    }
+    
+    
+    if(game_reset == 1)
+    {
+      ballmethod();
+      score = 1;
+    }
+   
+}
+void scoreboard()
+{
+  //scoreboard
     fill(0,0,0);
     textSize(30);
     text(score,100,50);
-    
+}
+void ballmethod()
+{
+     //ball
+    stroke(255,0,0);
+    fill(255, 255, 0);
+    ellipse(ballx, bally, ballw, ballh);
+}
+void paddlemethod()
+{
+  //paddle
+   stroke(0,0,0);
+   fill(250,99,99);
+   rect(paddlex,paddley,paddlew,paddleh);
+}
+
+void displayGame()
+{
+  background(235, 247, 255);
+    //calling all the methods
+    paddlemethod();
+    ballmethod();
+    scoreboard();
     keyPressed();
     bouncingball();
     paddlemovement();
@@ -89,19 +138,17 @@ void draw()
     speedup();
     smallpaddle();
     slowdown();
-    //twoballs();
-  }
 }
-
 void Paddle()
 {
+  //paddle shape
   paddle = createShape();
   paddle.beginShape();
   paddle.vertex(0, 0);
-  paddle.vertex(0, -luserh/2);
-  paddle.vertex(20, -luserh/2);
-  paddle.vertex(20, luserh);
-  paddle.vertex(0, luserh);
+  paddle.vertex(0, -paddleh/2);
+  paddle.vertex(20, -paddleh/2);
+  paddle.vertex(20, paddleh);
+  paddle.vertex(0, paddleh);
   paddle.endShape(CLOSE);
 }
 
@@ -126,7 +173,9 @@ void bouncingball()
     //if ball goes past paddle
     if(ballx +ballw/2 <= 0)
     {
-      endgame();
+      fail.play();
+      fail.rewind();
+      state = 2;
     }
     
 }
@@ -134,14 +183,14 @@ void bouncingball()
 void paddlemovement()
 {
   //if paddle is going off the top of the screen
-   if(lusery < 0)
+   if(paddley < 0)
      {
-      lusery = lusery + paddleSpeed;
+      paddley = paddley + paddleSpeed;
      }
      //if paddle is going off greater than the height you allocated.
-    if(lusery + luserh > height)
+    if(paddley + paddleh > height)
     {
-      lusery = lusery - paddleSpeed;
+      paddley = paddley - paddleSpeed;
     }
 }
 
@@ -153,7 +202,7 @@ void keyPressed()
       // if Q is pressed paddle moves up
       if(keyCode == 'w' || keyCode == 'W')
         {
-          lusery = lusery - paddleSpeed;
+          paddley = paddley - paddleSpeed;
         }
      }
   //goingdown
@@ -162,7 +211,7 @@ void keyPressed()
       //if A is pressed paddle moves up
       if(keyCode == 's' || keyCode == 'S')
         {
-          lusery = lusery + paddleSpeed; 
+          paddley = paddley + paddleSpeed; 
         }
     }
     
@@ -171,9 +220,7 @@ void keyPressed()
 void hitpaddle()
 {
   //if ball hit points of the paddle
-  //if( dist(ballx, bally, luserx-luserh/2, lusery+luserh/2) < 110  )
-  //if(((ballx - ballw/2) < (luserx + luserw)) && ((bally - ballh/2) < (lusery + luserh/2)) && ((bally + ballh/2) > (lusery + luserh/2)))
-  if(((ballx - ballw/2) < (luserx + luserw)) && ((bally - ballh/2) < (lusery + luserh/2)) && ((bally + ballw/2) > (lusery + luserh/2)))
+  if(((ballx - ballw/2) < (paddlex + paddlew)) && ((bally - ballh/2) < (paddley + paddleh/2)) && ((bally + ballw/2) > (paddley + paddleh/2)))
   {
     //if ball hits paddle from the right side 
     if(xSpeed <0)
@@ -182,11 +229,14 @@ void hitpaddle()
       xSpeed = - xSpeed;
       //everytime it hits off the paddle the score goes up
       score++;
+      boing.play();
+      boing.rewind();
      }
-    //ySpeed = - ySpeed;
-    //&& bally - ballh < luserk + luserh
+    
   }
 }
+
+
 //when game ends screen
 void endgame()
 {
@@ -217,7 +267,10 @@ void endgame()
     //if mouse is pressed between these coordinates
     if(mouseX>310 && mouseX<585 && mouseY>275 && mouseY<355)
     {
-      reptar.menu = false;
+      game_reset = 1;
+      state = 1;
+      click.play();
+      click.rewind();
     }
   }
   if(mousePressed)
@@ -236,14 +289,17 @@ void paddlesize()
   if(score % 3 == 0)
   {
     stroke(255,205,0);
+    //green sqauare
     fill(68,255,18);
     rect(psizex,psizey,psizew,psizeh);
-  
-    //if(ballx - ballw/2 < psizex + psizew/2 && bally - ballh/2 < + psizey + psizeh/2 && bally + ballh/2 > + psizey - psizeh/2 )
+    //if ball hits the square
      if(((ballx - ballw/2) > (psizex + psizew)) && ((bally - ballh/2) < (psizey + psizeh/2)) && ((bally + ballh/2) > (psizey + psizeh/2)))
     {
-    //increase paddle size
-    luserh++;
+     //increase paddle size
+     paddleh  += 5;
+     //change colour of the square
+     fill(202,255,188);
+     rect(psizex,psizey,psizew,psizeh);
     }
   }
 }
@@ -252,14 +308,17 @@ void smallpaddle()
   if(score % 5 == 0)
   {
     stroke(255,205,0);
+    //red sqaure
     fill(255,0,0);
     rect(spadx,spady,spadw,spadh);
-  
-    //if(ballx - ballw/2 < spadx + spadw/2 && bally - ballh/2 < + spady + spadh/2 && bally + ballh/2 > + spady - spadh/2 )
+    //if ball hits the sqaure
     if(((ballx - ballw/2) > (spadx + spadw)) && ((bally - ballh/2) < (spady + spadh/2)) && ((bally + ballh/2) > (spady + spadh/2)))
     {
-    //increase paddle size
-    luserh--;
+      //decrease paddle size
+      paddleh -= 3;
+      //change colour of the square
+      fill(255,183,189);
+      rect(spadx,spady,spadw,spadh);
     }
   }
   
@@ -270,16 +329,19 @@ void speedup()
   if (score % 5 == 0)
   {
     stroke(255,205,0);
+     //pink square
     fill(242,18,255);
     rect(supx,supy,supw,suph);
   
     //if ball hit rect
-    //if(ballx - ballw/2 < supx + supw/2 && bally - ballh/2 < + supy + suph/2 && bally + ballh/2 > + supy - suph/2 )
     if(((ballx - ballw/2) > (supx + supw)) && ((bally - ballh/2) < (supy + suph/2)) && ((bally + ballh/2) > (supy + suph/2)))
     {
       //increase speed
-      xSpeed = xSpeed + 1;
-      ySpeed = ySpeed + 1;
+      xSpeed += 2;
+      ySpeed += 2;
+      //change colour of the square
+      fill(252,194,252);
+      rect(supx,supy,supw,suph);
     }
   }
 }
@@ -289,74 +351,19 @@ void slowdown()
   if (score % 3 == 0)
   {
     stroke(255,205,0);
-    fill(242,18,255);
+    //orange sqaure
+    fill(252,97,0);
     rect(downx,downy,downw,downh);
   
     //if ball hit rect
-    //if(ballx - ballw/2 < downx + downw/2 && bally - ballh/2 < + downy + downh/2 && bally + ballh/2 > + downy - downh/2 )
     if(((ballx - ballw/2) > (downx + downw)) && ((bally - ballh/2) < (downy + downh/2)) && ((bally + ballh/2) > (downy + downh/2)))
     {
       //increase speed
-      xSpeed = xSpeed + 1;
-      ySpeed = ySpeed + 1;
+      xSpeed -=  1;
+      ySpeed -=  1;
+      //change colour of the square
+      fill(252,159,97);
+      rect(downx,downy,downw,downh);
     }
   }
 }
-/*
-void twoballs()
-{
-  if (score % 2 == 0)
-  {
-    fill(2,242,228);
-    rect(tbx,tby,tbw,tbh);
-  }
-
-    //if(ballx - ballw/2 < tbx + tbw/2 && bally - ballh/2 < + tby + tbh/2 && bally + ballh/2 > + tby - tbh/2 )
-    if(((ballx - ballw/2) < (tbx + tbw)) && ((bally - ballh/2) < (tby + tbh/2)) && ((bally + ballh/2) > (tby + tbh/2)))
-    {
-       ellipse(tballx,tbally,tballw,tballh);
-       
-       //Speed of ball
-       tballx += xSpeed;
-       tbally += ySpeed;
-      //bouncing ball
-      //bounce off the side walls 
-    }
-      if (tballx + tballw > width ) 
-       {
-         //change direction
-         xSpeed = - xSpeed;
-       }
-       //bounce off the top and bottom walls
-       if(tbally + tballh > height || tbally < 0)
-        {
-          //change direction
-          ySpeed = - ySpeed;
-         }
-        //if ball goes past paddle
-        if(tballx <= 0)
-         {
-            endgame();
-         }
-    //}
-   //if ball hit points of the paddle
-    //if(tballx - tballw/2 < luserx + luserw && tbally - tballh/2 < + lusery + luserh/2 && tbally + tballh/2 > + lusery - luserh/2 )
-    if(((ballx - ballw/2) < (luserx + luserw)) && ((bally - ballh/2) < (lusery + luserh/2)) && ((bally + ballh/2) > (lusery + luserh/2)))
-    {
-    //if ball hits paddle from the right side 
-      if(xSpeed <0)
-      {
-        //change direction
-        ySpeed = - ySpeed;
-        //everytime it hits off the paddle the score goes up
-        score++;
-      }
-    }
- // }
-}
-  
-  
-
-
-
-*/
