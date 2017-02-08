@@ -93,11 +93,19 @@ void draw()
       endgame(); 
     }
     
-    
+    //trying to get the Play again button to work
     if(game_reset == 1)
     {
-      ballmethod();
+      //redrawing the ball
+      ballx = 100;
+      bally = 100;
+      //setting the state
+      state = 1;
+      //resetting the score
       score = 1;
+      //setting the speeds again
+      xSpeed = 5;
+      ySpeed = 5;
     }
    
 }
@@ -219,6 +227,9 @@ void keyPressed()
 //ball to hit off paddle
 void hitpaddle()
 {
+   //if (ballx < (paddlex + paddlew + (balld/2))) {
+   // if ((bally >= paddley) && (bally <= paddley + paddleh))
+   //Another way for the ball to hit paddle, but when I did it this way, the ball didnt hit the powerups.
   //if ball hit points of the paddle
   if(((ballx - ballw/2) < (paddlex + paddlew)) && ((bally - ballh/2) < (paddley + paddleh/2)) && ((bally + ballw/2) > (paddley + paddleh/2)))
   {
