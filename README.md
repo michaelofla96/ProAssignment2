@@ -18,4 +18,6 @@ There is 4 different power ups. They appear in the top right corner and the bott
 
 The Play again button does not work, I tried using a switch statement to use but that wouldnt work. Then I tried with a boolean which didn't. I then used a few if statements to switch between. I thought the problem was that the ball was past 0 and the game kept ending over and over. So I tried redrawing the ball again in new co-ordinates but it that didnt work either. I left it in the game but it never ending up working.
 
+[![Video](http://img.youtube.com/vi/0WMdEI4QAaI/0.jpg)](http://www.youtube.com/watch?v=0WMdEI4QAaI)
+
 
